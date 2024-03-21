@@ -1,26 +1,19 @@
-// const http = require("http");
-// const fs = require("fs");
+const http = require("http");
+const fs = require("fs");
 
-// const myServer = http.createServer((req, res) => {
-//   const log = `${Date.now()}: New Req Received\n`;
-//   fs.appendFile("log.txt", log, (err, data) => {
-//     res.end("Hello From Server");
-//   });
+const myServer = http.createServer((req, res) => {
+  const log = `${Date.now()}: ${req.url}New Req Received\n`;
+  fs.appendFile("log.txt", log, (err, data) => {
+    switch(req.url) {
+      case '/': res.end("HomePage");
+      break;
+      case '/about': res.end("Its me");
+      break;
+      default: res.end("404 NOT FOUND");
+    }
+    
+  });
 
-// });
+});
 
-// myServer.listen(8000, () => console.log("Server Started"));
-
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const app = express();
-
-app.get("/", (req, res) => {
-  res.json({
-    message: "a simple api"
-  })
-} )
-
-app.listen(5000,() => {
-  console.log("ap")
-})
+myServer.listen(8000, () => console.log("Server Started "));
